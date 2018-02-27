@@ -5,10 +5,8 @@ import {CryphoSecureStorageProvider} from "./providers/platform-storages/crypho-
 import {IntelSecureStorageProvider} from "./providers/platform-storages/intel-secure-storage-provider";
 
 @NgModule({
-    declarations: [
-    ],
-    exports: [
-    ]
+    declarations: [],
+    exports: []
 })
 export class GlIonic2SecureStorageModule {
   static forRoot(): ModuleWithProviders {
