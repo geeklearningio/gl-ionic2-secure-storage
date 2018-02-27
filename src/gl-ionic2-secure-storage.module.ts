@@ -6,7 +6,9 @@ import {IntelSecureStorageProvider} from "./providers/platform-storages/intel-se
 
 @NgModule({
     declarations: [],
-    exports: []
+    exports: [
+        
+    ]
 })
 export class GlIonic2SecureStorageModule {
   static forRoot(): ModuleWithProviders {
