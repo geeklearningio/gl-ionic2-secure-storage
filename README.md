@@ -37,7 +37,7 @@ ionic cordova plugin add com-intel-security-cordova-plugin cordova-plugin-secure
 
 # Usage
 
-## Create a config class for the GLSecureStorageProvider
+## Create a config provider for the GLSecureStorageProvider
 The `GLSecureStorageProvider` is configured via a configuration file named `GLSecureStorageConfigProvider`. You need to copy it from the source, give it another name and implement it's functions as described in the comments.
 File: https://github.com/geeklearningio/gl-ionic2-secure-storage/blob/master/src/providers/gl-secure-storage-config-provider.ts
 
@@ -59,7 +59,7 @@ export class MySecureStorageConfigProvider {
 The namespace is used by the Intel plugin for Android to create a specific folder in the storage for your app.
 
 
-## Import the module and decalre the providers
+## Import the module and declare the providers
 Add the module to your `app.module.ts`, declare the `GLSecureStorageProvider` and override the `GLSecureStorageConfigProvider` with your own.
 
 ```typescript
@@ -93,6 +93,9 @@ import { IonicTools2Module, ConnectivityProvider } from '@bpce/ionic-tools-2/dis
 })
 export class AppModule {}
 ```
+
+Note: If you had already imported the IonicStorageModule in your app, you should remove it, as this bundle already imports it.
+
 ## Use the provider
 It works like any storage provider:
 ```typescript
@@ -102,7 +105,7 @@ import {GLSecureStorageProvider} from "gl-ionic2-secure-storage/dist/src";
 @Injectable()
 export class MyPage {
 
-  constructor(glSecureStorage: GLSecureStorageProvider) {
+  constructor(private glSecureStorage: GLSecureStorageProvider) {
     this.glSecureStorage.set('myKey', 'toto');
   }
 }
