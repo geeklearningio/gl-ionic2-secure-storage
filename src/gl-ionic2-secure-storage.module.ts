@@ -5,10 +5,14 @@ import {CryphoSecureStorageProvider} from "./providers/platform-storages/crypho-
 import {IntelSecureStorageProvider} from "./providers/platform-storages/intel-secure-storage-provider";
 import {StorageProvider} from "./providers/platform-storages/storage-provider";
 import {SecureStorage} from "@ionic-native/secure-storage";
+import {IonicStorageModule} from "@ionic/storage";
 
 @NgModule({
     declarations: [],
     exports: [],
+    imports: [
+        IonicStorageModule.forRoot()
+    ],
     providers: [CryphoSecureStorageProvider, IntelSecureStorageProvider, StorageProvider, SecureStorage ]
 })
 export class GlIonic2SecureStorageModule {
