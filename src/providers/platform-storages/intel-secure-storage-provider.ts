@@ -144,11 +144,15 @@ export class IntelSecureStorageObject {
       this.getKeysFromStorage()
         .then((keys: Array<string>) => {
           this.keys = keys;
-          this.keys.push(key);
-          this.setStorageKeysArray(this.keysArrayStorageKey, JSON.stringify(this.keys))
-            .then(() => {
-              return resolve();
-            });
+          if (this.keys.findIndex(arrayKey => key === arrayKey) === -1) {
+            this.keys.push(key);
+            this.setStorageKeysArray(this.keysArrayStorageKey, JSON.stringify(this.keys))
+              .then(() => {
+                return resolve();
+              });
+          } else {
+            return resolve();
+          }
         });
     });
   }
@@ -211,6 +215,9 @@ export class IntelSecureStorageObject {
             console.error("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
             return reject(error);
           } else {
+            if (bumpStatus) {
+              this.bumpClearStatus();
+            }
             return resolve(key);
           }
         });
