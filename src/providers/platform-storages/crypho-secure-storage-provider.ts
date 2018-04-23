@@ -3,6 +3,21 @@ import {Events, Platform} from "ionic-angular";
 import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
 import {GLSecureStorageProvider} from "../gl-secure-storage-provider";
 
+class Deferred<T> {
+
+  promise: Promise<T>;
+  resolve: (value?: T | PromiseLike<T>) => void;
+  reject:  (reason?: any) => void;
+
+  constructor() {
+    this.promise = new Promise<T>((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject  = reject;
+    });
+  }
+}
+
+
 @Injectable()
 export class CryphoSecureStorageProvider {
   private secureStorageObject: CryphoSecureStorageObject;
@@ -57,7 +72,16 @@ export class CryphoSecureStorageObject {
   }
 
   get(key: string): Promise<string> {
-    return this.ionicSecureStorageObject.get(key);
+    let deferred = new Deferred<string>();
+    this.ionicSecureStorageObject.get(key)
+      .then((value)=>{
+          deferred.resolve(value);
+        },
+        (error)=>{
+          deferred.resolve(null);
+        });
+    return deferred.promise;
+
   }
 
   set(key: string, value: string): Promise<any> {
