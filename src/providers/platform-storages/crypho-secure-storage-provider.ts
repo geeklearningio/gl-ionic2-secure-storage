@@ -122,7 +122,12 @@ export class CryphoSecureStorageObject {
           this.events.publish(GLSecureStorageProvider.clearStorageStatusUpdateEvent, this.clearStatus.current / this.clearStatus.total * 100);
           return resolve(result);
         }, (error) => {
-          return reject(error);
+          // there was an error, too bad, it's not the time to handle it anymore
+          console.error('Error removing secure storage object: ' + key);
+          this.clearStatus.current += 1;
+          this.events.publish(GLSecureStorageProvider.clearStorageStatusUpdateEvent, this.clearStatus.current / this.clearStatus.total * 100);
+          return resolve(error);
+          //return reject(error);
         });
     });
   }
